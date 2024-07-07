@@ -32,21 +32,31 @@ const fetchPokemon = () => {
 };
 
 const displayPokemon = (pokemon) => {
-    console.log(pokemon)
+    // console.log(pokemon)
     const pokemonHTMLString = pokemon.map (pokemon =>`
         <div class="card"> 
             <img src="${pokemon.image}"/>
             <h2>${pokemon.id}. ${pokemon.name}</h2>
             <p>Type: ${pokemon.type}</p>
-            <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name)}</p>
-            <p>Base Stats:</p>
+            <div class="character-details hidden">
+                <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name)}</p>
+                <p>Base Stats:</p>
                     <ul>
-                        ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`)}
+                        ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
                     </ul>
+            </div>
         </div>
-        `)
-        .join('');
+        `).join('');
+
         pokedex.innerHTML = pokemonHTMLString;
+
+        // Event listener to toggle details for each card
+    pokedex.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', function() {
+            const details = this.querySelector('.character-details');
+            details.classList.toggle('hidden');
+        });
+    });
 }
 
 // Function to filter Pokemon based on search term
@@ -84,7 +94,7 @@ function displayPage(page) {
     const paginatedItems = filteredPokemon.slice(start, end);
 
     paginatedItems.forEach(pokemon => {
-        const card = createPokemonCard(pokemon);
+        const card = displayPokemon(pokemon);
         pokedex.appendChild(card);
     });
 
