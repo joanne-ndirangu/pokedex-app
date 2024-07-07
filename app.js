@@ -3,6 +3,7 @@ const searchInput = document.getElementById('search-input');
 const pokedex = document.getElementById("pokedex");
 const prevPageButton = document.getElementById('prev-page');
 const nextPageButton = document.getElementById('next-page');
+const paginationButtons = document.getElementById('pagination-buttons')
 
 let pokemon = [];
 let filteredPokemon = [];
@@ -46,6 +47,8 @@ function displayPage(page) {
     // Update pagination buttons
     prevPageButton.disabled = currentPage === 1;
     nextPageButton.disabled = end >= filteredPokemon.length;
+
+    updatePagination();
 }
 
 function createPokemonCard(pokemon) {
@@ -57,13 +60,14 @@ function createPokemonCard(pokemon) {
             <img src="${pokemon.image}" alt="${pokemon.name}"/>
             <h2>${pokemon.id}. ${pokemon.name}</h2>
             <p>Type: ${pokemon.type}</p>
-            <div class="character-details hidden">
-                <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
-                <p>Base Stats:</p>
-                    <ul>
-                        ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
-                    </ul>
-            </div>
+            <button class="view-details bg-blue-700 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded my-2">View Details</button>
+                <div class="character-details hidden">
+                    <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
+                    <p>Base Stats:</p>
+                        <ul>
+                            ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
+                        </ul>        
+                </div>
         </div>
         `;
 
@@ -100,7 +104,9 @@ searchInput.addEventListener('input', function() {
     filterPokemon(this.value);
 });
 
-// fetchPokemon();
+function updatePagination() {
+    paginationButtons.textContent = `${currentPage}`;
+}
 
 // Event listener for previous page button
 prevPageButton.addEventListener('click', function() {
