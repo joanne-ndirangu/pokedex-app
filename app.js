@@ -7,60 +7,77 @@ const nextPageButton = document.getElementById('next-page');
 let pokemon = [];
 let filteredPokemon = [];
 let currentPage = 1;
-const itemsPerPage = 16;
+const itemsPerPage = 8;
 
-const fetchPokemon = () => {
-    const promises = [];
-    for (let i =1; i<= 1025; i++) { 
-        const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        promises.push(fetch(url).then(res => res.json()));
-    }
+// Fetch Pokemon data from PokeAPI
+fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
+.then(res => res.json())
+.then(data => {
+    const fetchPromises = data.results.map(pokemon => fetch(pokemon.url).then(res => res.json()));
+    return Promise.all(fetchPromises);
+})
+.then(pokemonData => {
+    pokemon = pokemonData.map(data => ({
+        name: data.name,
+        id: data.id,
+        image: data.sprites['front_default'],
+        type: data.types.map(type => type.type.name).join(', '),
+        abilities: data.abilities,
+        stats: data.stats
+    }));
+    filteredPokemon = pokemon.slice();
+    displayPage(currentPage);
+})
+.catch(error => console.error('Error fetching Pokemon:', error));
 
-    Promise.all(promises)
-    .then(results => {
-            pokemon = results.map( data => ({
-            name: data.name,
-            id: data.id,
-            image: data.sprites['front_default'],
-            type: data.types.map((type) => type.type.name).join(', '),
-            abilities: data.abilities,
-            stats: data.stats
-        }))
-        displayPokemon(pokemon);
-    })
-    .catch(error => console.error('Error fetching Pokemon:', error));
-};
+// Function to display a page of Pokemon
+function displayPage(page) {
+    pokedex.innerHTML = ''; // Clear previous content
 
-const displayPokemon = (pokemon) => {
+    const start = (page - 1) * itemsPerPage;
+    const end = page * itemsPerPage;
+    const paginatedItems = filteredPokemon.slice(start, end);
+
+    paginatedItems.forEach(pokemon => {
+        const card = createPokemonCard(pokemon);
+        pokedex.appendChild(card);
+    });
+
+    // Update pagination buttons
+    prevPageButton.disabled = currentPage === 1;
+    nextPageButton.disabled = end >= filteredPokemon.length;
+}
+
+function createPokemonCard(pokemon) {
     // console.log(pokemon)
-    const pokemonHTMLString = pokemon.map (pokemon =>`
-        <div class="card"> 
-            <img src="${pokemon.image}"/>
+    const card = document.createElement('div');
+    card.className = 'col mb-4'
+    card.innerHTML = `
+        <div class="character-card p-4"> 
+            <img src="${pokemon.image}" alt="${pokemon.name}"/>
             <h2>${pokemon.id}. ${pokemon.name}</h2>
             <p>Type: ${pokemon.type}</p>
             <div class="character-details hidden">
-                <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name)}</p>
+                <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
                 <p>Base Stats:</p>
                     <ul>
                         ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
                     </ul>
             </div>
         </div>
-        `).join('');
+        `;
 
-        pokedex.innerHTML = pokemonHTMLString;
-
-        // Event listener to toggle details for each card
-    pokedex.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', function() {
+        // Click functionality to toggle details
+        card.querySelector('.character-card').addEventListener('click', function() {
             const details = this.querySelector('.character-details');
-            details.classList.toggle('hidden');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
         });
-    });
+
+    return card;
 }
 
 // Function to filter Pokemon based on search term
-const filterPokemon = (searchTerm) => {
+function filterPokemon(searchTerm) {
     searchTerm = searchTerm.trim().toLowerCase();
 
     if (searchTerm === '') {
@@ -83,25 +100,7 @@ searchInput.addEventListener('input', function() {
     filterPokemon(this.value);
 });
 
-fetchPokemon();
-
-// Function to display a page of Pokemon
-function displayPage(page) {
-    pokedex.innerHTML = ''; // Clear previous content
-
-    const start = (page - 1) * itemsPerPage;
-    const end = page * itemsPerPage;
-    const paginatedItems = filteredPokemon.slice(start, end);
-
-    paginatedItems.forEach(pokemon => {
-        const card = displayPokemon(pokemon);
-        pokedex.appendChild(card);
-    });
-
-    // Update pagination buttons
-    prevPageButton.disabled = currentPage === 1;
-    nextPageButton.disabled = end >= filteredPokemon.length;
-}
+// fetchPokemon();
 
 // Event listener for previous page button
 prevPageButton.addEventListener('click', function() {
@@ -118,5 +117,4 @@ nextPageButton.addEventListener('click', function() {
         displayPage(currentPage);
     }
 });
-
 })
