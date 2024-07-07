@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 const searchInput = document.getElementById('search-input');
 const pokedex = document.getElementById("pokedex");
-console.log(pokedex);
+const prevPageButton = document.getElementById('prev-page');
+const nextPageButton = document.getElementById('next-page');
 
 let pokemon = [];
 let filteredPokemon = [];
+let currentPage = 1;
+const itemsPerPage = 16;
 
 const fetchPokemon = () => {
     const promises = [];
@@ -60,8 +63,9 @@ const filterPokemon = (searchTerm) => {
             pokemon.id.toString().includes(searchTerm)
         );
     }
-    displayPokemon(filteredPokemon); // Display the filtered or all characters
-    console.log(pokemon)
+     // Reset pagination
+     currentPage = 1;
+     displayPage(currentPage);
 }
 
 // Search functionality
@@ -70,4 +74,39 @@ searchInput.addEventListener('input', function() {
 });
 
 fetchPokemon();
+
+// Function to display a page of Pokemon
+function displayPage(page) {
+    pokedex.innerHTML = ''; // Clear previous content
+
+    const start = (page - 1) * itemsPerPage;
+    const end = page * itemsPerPage;
+    const paginatedItems = filteredPokemon.slice(start, end);
+
+    paginatedItems.forEach(pokemon => {
+        const card = createPokemonCard(pokemon);
+        pokedex.appendChild(card);
+    });
+
+    // Update pagination buttons
+    prevPageButton.disabled = currentPage === 1;
+    nextPageButton.disabled = end >= filteredPokemon.length;
+}
+
+// Event listener for previous page button
+prevPageButton.addEventListener('click', function() {
+    if (currentPage > 1) {
+        currentPage--;
+        displayPage(currentPage);
+    }
+});
+
+// Event listener for next page button
+nextPageButton.addEventListener('click', function() {
+    if ((currentPage * itemsPerPage) < filteredPokemon.length) {
+        currentPage++;
+        displayPage(currentPage);
+    }
+});
+
 })
