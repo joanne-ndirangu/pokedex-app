@@ -5,6 +5,13 @@ const prevPageButton = document.getElementById('prev-page');
 const nextPageButton = document.getElementById('next-page');
 const paginationButtons = document.getElementById('pagination-buttons')
 const typeFilter = document.getElementById('type-filter');
+const modal = document.getElementById('pokemonModal');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
+const modalType = document.getElementById('modalType');
+const modalAbilities = document.getElementById('modalAbilities');
+const modalStats = document.getElementById('modalStats');
+const closeModalButton = document.getElementById('closeModal');
 
 let pokemon = [];
 let filteredPokemon = [];
@@ -73,13 +80,24 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
             `;
 
         // Click functionality to toggle details
-        card.querySelector('.character-card').addEventListener('click', function() {
-            const details = this.querySelector('.character-details');
-            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        card.querySelector('.view-details').addEventListener('click', function() {
+            modalImage.src = pokemon.image;
+            modalTitle.textContent = `${pokemon.id}. ${pokemon.name}`;
+            modalType.textContent = `Type: ${pokemon.type}`;
+            modalAbilities.textContent = `Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(', ')}`;
+            modalStats.innerHTML = `Base Stats:<ul>${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}</ul>`;
+
+        // Display modal
+        modal.classList.remove('hidden');
         });
 
     return card;
     }
+
+      // Close modal functionality
+      closeModalButton.addEventListener('click', function() {
+        modal.classList.add('hidden');
+    });
 
     // Function to filter Pokemon based on search term
     function filterPokemon(searchTerm) {
