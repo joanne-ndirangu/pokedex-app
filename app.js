@@ -68,7 +68,7 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
                 <img src="${pokemon.image}" alt="${pokemon.name}"/>
                 <h2>${pokemon.id}. ${pokemon.name}</h2>
                 <p>Type: ${pokemon.type}</p>
-                <button class="view-details bg-blue-700 hover:bg-sky-300 text-white font-bold py-2 px-4 rounded my-2">View Details</button>
+                <button class="view-details bg-blue-700 text-sky-300 hover:bg-sky-300 hover:text-blue-700 py-2 px-4 m-1">View Details</button>
                     <div class="character-details hidden">
                         <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
                         <p>Base Stats:</p>
