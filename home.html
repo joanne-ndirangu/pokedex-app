@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./output.css">
+    <style>
+         nav {
+            margin: 0 auto;
+            justify-content: end;
+        }
+        nav a {
+            padding: 0 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            padding: 10px;
+            height: 80vh;
+        }
+        .container img {
+            height: 60vh;
+            text-align: center;
+        }
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: large;
+        }
+        .pic {
+            display: flex;
+            align-items: center;
+            justify-content: center;  
+            text-align: center;
+            font-size: large;
+        }
+        body {
+            overflow: hidden;
+        }
+    </style>
+    <title>Home</title>
+</head>
+<body class="bg-black my-4 text-sky-700">
+    <div class="mx-auto my-auto flex items-center w-3/4">
+        <h1 class="text-5xl">Pokédex</h1>
+        <nav class="justify-end text-2xl">            
+            <a href="#">Home</a>
+            <a href="index.html">Pokémon</a>
+        </nav>
+    </div>
+    <div class="container"> 
+        <div class="pic">
+            <img src="https://i.pinimg.com/474x/ad/0a/38/ad0a38b8fcab6ed8fce7d260f427ca0b.jpg" alt="pokemon">
+        </div>
+        <div class="info">
+            <p>
+                Pokémon is a Japanese media franchise consisting of video games, animated series and films, a trading card game, and other related media. The franchise takes place in a shared universe in which humans co-exist with creatures known as Pokémon, a large variety of species endowed with special powers. <br>
+                The original name full name for the franchise is Pocket Monsters (ポケットモンスター, Poketto Monsutā) 
+            </p>
+        </div>
+    </div>
+</body>
+</html>

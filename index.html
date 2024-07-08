@@ -4,7 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./output.css">
+    <title>Pokédex</title>
     <style>
+         nav {
+            margin: 0 auto;
+            justify-content: end;
+        }
+        nav a {
+            padding: 0 20px;
+        }
+        h1 {
+            justify-content: start;
+        }
         .hidden {
             display: none;
         }
@@ -12,8 +23,8 @@
             overflow-x: hidden;
         }
         .character-card {
-            background-color: #3cbaf9;
-            color: blue;
+            background-color: #05587e;
+            /* color: white; */
             padding: 20px;
             border-radius: 10px;
             margin: 10px;
@@ -23,20 +34,25 @@
             height: 100px;
         }
     </style>
-    <title>Pokédex</title>
 </head>
 <body class="bg-black my-4">
     <header class="py-4">
-        <h1 class="text-sky-500 text-5xl text-center">Pokédex App</h1>
+        <div class="container mx-auto my-auto flex items-center text-sky-700">
+            <h1 class="text-5xl justify-start">Pokédex</h1>
+            <nav class="justify-end text-2xl">
+                <a href="home.html">Home</a>
+                <a href="#">Pokémon</a>
+            </nav>
+        </div>
         <div class="container mx-auto justify-center items-center my-4">
             <div class="flex justify-center items-center w-full m-8">
-                <input id="search-input" type="text" class="form-input bg-sky-300 placeholder-blue-700 w-1/2 px-3 py-2 rounded-md" placeholder="Search Pokémon">
+                <input id="search-input" type="text" class="form-input bg-blue-950 placeholder-sky-300 w-1/2 px-3 py-2 rounded-md" placeholder="Search Pokémon">
             </div>
         </div>
     </header>
     <div id="pokedex" class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4"></div>
-    <div id="pokemonModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
-        <div class="bg-blue-700 text-sky-300 p-8 rounded-lg max-w-lg">
+    <div id="pokemonModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-70">
+        <div class="bg-blue-950 text-sky-300 p-8 rounded-lg max-w-lg">
           <img id="modalImage"/>
           <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
           <p id="modalType"></p>
@@ -46,7 +62,7 @@
         </div>
       </div>
     <div id="btns" class="container mx-auto flex justify-center items-center">
-        <button id="prev-page" class="bg-blue-700 hover:bg-sky-300 text-sky-300 hover:text-blue-700 px-4 py-2 rounded-md mr-2">Back</button>
+        <button id="prev-page" class="bg-blue-900 hover:bg-sky-300 text-sky-300 hover:text-blue-900 px-4 py-2 rounded-md mr-2">Back</button>
         <div id="pagination-buttons" class="text-sky-300 px-4 py-2 rounded-md mr-2"></div>
         <button id="next-page" class="bg-blue-700 hover:bg-sky-300 text-sky-300 hover:text-blue-700 px-4 py-2 rounded-md mr-2">Next</button>
     </div>

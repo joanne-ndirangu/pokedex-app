@@ -64,15 +64,15 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
         const card = document.createElement('div');
         card.className = 'col mb-4'
         card.innerHTML = `
-            <div class="character-card p-4"> 
+            <div class="character-card p-4 text-sky-300 bg-blue-950"> 
                 <img src="${pokemon.image}" alt="${pokemon.name}"/>
-                <h2>${pokemon.id}. ${pokemon.name}</h2>
-                <p>Type: ${pokemon.type}</p>
-                <button class="view-details bg-blue-700 text-sky-300 hover:bg-sky-300 hover:text-blue-700 py-2 px-4 m-1">View Details</button>
+                <h2 style="text-transform: capitalize;">${pokemon.id}. ${pokemon.name}</h2>
+                <p style="text-transform: capitalize;"><b>Type: </b>${pokemon.type}</p>
+                <button class="view-details bg-blue-950 text-sky-300 hover:bg-sky-300 hover:text-blue-950 py-2 px-4 m-1">View Details</button>
                     <div class="character-details hidden">
-                        <p>Abilities: ${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
-                        <p>Base Stats:</p>
-                            <ul>
+                        <p style="text-transform: capitalize;"><b>Abilities: </b>${pokemon.abilities.map(ability => ability.ability.name).join(',')}</p>
+                        <p style="text-transform: capitalize;"><b>Base Stats: </b></p>
+                            <ul style="text-transform: capitalize;">
                                 ${pokemon.stats.map(stat => `<li>${stat.stat.name}: ${stat.base_stat}</li>`).join('')}
                             </ul>        
                     </div>
