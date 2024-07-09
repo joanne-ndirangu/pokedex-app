@@ -29,6 +29,10 @@
             border-radius: 10px;
             margin: 10px;
         }
+        .character-card:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
         .character-card img {
             width: 100px;
             height: 100px;
@@ -46,7 +50,28 @@
         </div>
         <div class="container mx-auto justify-center items-center my-4">
             <div class="flex justify-center items-center w-full m-8">
-                <input id="search-input" type="text" class="form-input bg-blue-950 placeholder-sky-300 w-1/2 px-3 py-2 rounded-md" placeholder="Search Pokémon">
+                <input id="search-input" type="text" class="form-input bg-blue-950 text-sky-300 w-1/2 px-3 py-2 rounded-md m-8" placeholder="Search Pokémon">
+                <select id="type-filter" class="form-select bg-blue-950 text-sky-300 px-3 py-2 rounded-md">
+                    <option value="" disabled selected>All Types</option>
+                    <option value="normal">Normal</option>
+                    <option value="fire">Fire</option>
+                    <option value="water">Water</option>
+                    <option value="electric">Electric</option>
+                    <option value="grass">Grass</option>
+                    <option value="ice">Ice</option>
+                    <option value="fighting">Fighting</option>
+                    <option value="poison">Poison</option>
+                    <option value="ground">Ground</option>
+                    <option value="flying">Flying</option>
+                    <option value="psychic">Psychic</option>
+                    <option value="bug">Bug</option>
+                    <option value="rock">Rock</option>
+                    <option value="ghost">Ghost</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="dark">Dark</option>
+                    <option value="steel">Steel</option>
+                    <option value="fairy">Fairy</option>
+                </select>
             </div>
         </div>
     </header>
@@ -64,7 +89,7 @@
     <div id="btns" class="container mx-auto flex justify-center items-center">
         <button id="prev-page" class="bg-blue-900 hover:bg-sky-300 text-sky-300 hover:text-blue-900 px-4 py-2 rounded-md mr-2">Back</button>
         <div id="pagination-buttons" class="text-sky-300 px-4 py-2 rounded-md mr-2"></div>
-        <button id="next-page" class="bg-blue-700 hover:bg-sky-300 text-sky-300 hover:text-blue-700 px-4 py-2 rounded-md mr-2">Next</button>
+        <button id="next-page" class="bg-blue-900 hover:bg-sky-300 text-sky-300 hover:text-blue-700 px-4 py-2 rounded-md mr-2">Next</button>
     </div>
     <script src="./app.js"></script>
 </body>

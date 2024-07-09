@@ -91,32 +91,20 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
         modal.classList.remove('hidden');
         });
 
+       // Add click event listeners to the types
+       card.querySelectorAll('.pokemon-type').forEach(typeElement => {
+        typeElement.addEventListener('click', function() {
+            filterByType(this.textContent);
+        });
+    });
+
     return card;
-    }
+}
 
       // Close modal functionality
       closeModalButton.addEventListener('click', function() {
         modal.classList.add('hidden');
     });
-
-    // Function to filter Pokemon based on search term
-    function filterPokemon(searchTerm) {
-        searchTerm = searchTerm.trim().toLowerCase();
-
-        if (searchTerm === '') {
-            // If search term is empty, reset filteredPokemon to allPokemon
-            filteredPokemon = pokemon.slice();
-        } else {
-            // Filter allPokemon based on search term
-            filteredPokemon = pokemon.filter(pokemon =>
-                pokemon.name.toLowerCase().includes(searchTerm) ||
-                pokemon.id.toString().includes(searchTerm)
-            );
-        }
-        // Reset pagination
-        currentPage = 1;
-        displayPage(currentPage);
-    }
 
     // Search functionality
     searchInput.addEventListener('input', function() {
@@ -144,4 +132,22 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
             displayPage(currentPage);
         }
     });
+
+   // Event listener for type filter
+    typeFilter.addEventListener('change', function() {
+        filterByType(this.value);
+    });
+
+    // Function to filter Pokemon by type
+    function filterByType(type) {
+        if (type === '') {
+            filteredPokemon = pokemon.slice();
+        } else {
+            filteredPokemon = pokemon.filter(p => p.type.toLowerCase().includes(type.toLowerCase()));
+        }
+
+        // Reset pagination
+        currentPage = 1;
+        displayPage(currentPage);
+    }
 })
