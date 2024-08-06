@@ -133,7 +133,31 @@ fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
         }
     });
 
-   // Event listener for type filter
+   // Function to filter Pokemon based on search term
+   function filterCharacters(searchTerm) {
+    searchTerm = searchTerm.trim().toLowerCase();
+
+    if (searchTerm === '') {
+        // If search term is empty, reset filteredPokemon to allPokemon
+        filteredPokemon = pokemon.slice();
+    } else {
+        // Filter pokemon based on search term
+        filteredPokemon = pokemon.filter(pokemon =>
+            pokemon.name.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    currentPage = 1; // Reset to first page on search or clear
+
+    displayPage(currentPage); // Display the filtered or all characters
+}
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        filterCharacters(this.value);
+    });
+
+    // Event listener for type filter
     typeFilter.addEventListener('change', function() {
         filterByType(this.value);
     });
